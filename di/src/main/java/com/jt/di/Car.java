@@ -16,7 +16,7 @@ public class Car {
 
     @Autowired
    
-    public Car(@Qualifier("petrolEngine") Engine engine){
+    public Car(@Qualifier("dieselEngine") Engine engine){
         this.engine = engine;
         System.out.println("Within parameterized constructor of Car class");
     }
