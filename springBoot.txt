@@ -18,4 +18,12 @@ What is  @SpringBootApplication annotation?
 i)->it specifies the entry point for the our SpringBoot project
   ->it is the combination of 3 annotation
 		i)@SpringBootConfiguration->it gives the ability to create beans by @Bean inside the root file of the project
-		ii)@EnableAutoConfiguration->by this annotation spring container reads the dependencies,download the jar files & register them inside envi
+		ii)@EnableAutoConfiguration->by this annotation spring container reads the dependencies,download the jar files & register them inside environment
+
+
+
+
+
+Spring WEB
+	->Spring web MVC
+	->Spring REST
