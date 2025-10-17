@@ -4,9 +4,13 @@ import java.io.PrintWriter;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 public class HelloController {
@@ -40,6 +44,27 @@ public class HelloController {
         return "contact";
 
     } 
+    @RequestMapping({"/form"})
+    public String form(){
+        System.out.println("This is form page");
+        return "form";
+
+    }
+    //@RequestMapping(path= "/submit", method = RequestMethod.POST)
+    @PostMapping("/submit")
+    
+   
+    
+    // public String submitForm(@RequestParam(name="user" ,defaultValue="Java Technocrat") String username, @RequestParam("password") String password , Model model){
+    public String submit1(@ModelAttribute LoginCredential credential ,Model model){
+        System.out.println("This is submit page");
+      
+        model.addAttribute("name", credential.getUsername());
+        model.addAttribute("pass", credential.getPassword());
+        return "details";
+
+
+    }
 
 
 
