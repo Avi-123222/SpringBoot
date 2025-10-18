@@ -17,6 +17,12 @@ public class LoginCredential {
         System.out.println("setPassword is called");
         this.password = password;
     }
+    public LoginCredential(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+   
+   
 
     
     

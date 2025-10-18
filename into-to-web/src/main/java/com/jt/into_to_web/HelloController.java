@@ -1,6 +1,7 @@
 package com.jt.into_to_web;
 
 import java.io.PrintWriter;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,8 +9,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 @Controller
@@ -65,6 +71,15 @@ public class HelloController {
 
 
     }
+    @GetMapping("/multi-submit")
+    public String submit2(Model model) {
+        LoginCredential credential1 = new LoginCredential("JT", "1234");
+         LoginCredential credential2 = new LoginCredential("JavaTechnocrat", "5678");
+         LoginCredential credential3 = new LoginCredential("Avishek", "3456");
+      model.addAttribute("credentials", List.of(credential1, credential2, credential3));
+      return "credentials";
+    }
+    
 
 
 
