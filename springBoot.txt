@@ -27,3 +27,5 @@ i)->it specifies the entry point for the our SpringBoot project
 Spring WEB
 	->Spring web MVC
 	->Spring REST
+
+@RequestMapping
