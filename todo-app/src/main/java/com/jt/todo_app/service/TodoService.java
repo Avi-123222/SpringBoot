@@ -31,12 +31,11 @@ public class TodoService {
     }
 
     private Optional<Todo> getTodoById(int id) {
-        // for (Todo todo : todos) {
-        // if (todo.getId() == id) {
+        // // if (todo.getId() == id) {
         // return Optional.of(todo);
         // }
         // }
-        // return Optional.empty();
+        // return Optional.empty(); for (Todo todo : todos) {
 
         return todos.stream().filter(todo -> todo.getId() == id).findFirst();
     }

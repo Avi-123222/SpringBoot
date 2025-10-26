@@ -16,10 +16,10 @@ import lombok.RequiredArgsConstructor;
 public class TodoController {
     private final TodoService service;
 
-    // public TodoController(List<Todo> todos) {
+    // publicdoController(List<Todo> todos) {
     // this.todos = todos;
 
-    // }
+    // } To
 
     @GetMapping
     public String home(Model model) {

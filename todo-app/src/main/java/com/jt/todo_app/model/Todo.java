@@ -19,11 +19,11 @@ public class Todo {
     // }
 
     // public void setId(int id) {
-    // this.id = id;
+    // this.id = i public String getTask() {
+    // return task;d;
     // }
 
-    // public String getTask() {
-    // return task;
+    //
     // }
 
     // public void setTask(String task) {
