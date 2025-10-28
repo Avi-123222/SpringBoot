@@ -18,4 +18,8 @@ public class BlogController {
         model.addAttribute("blogs", service.getBlogs());
         return "home";
     }
+   // @GetMapping("/blog/{id}")
+//    public String getBlog(Model model){
+//
+//    }
 }
