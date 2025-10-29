@@ -7,11 +7,15 @@ import java.util.List;
 
 @Service
 public class BlogService {
-    public List<Blog> getBlogs(){
-        Blog blog1 = new Blog(1,"Heading1","Description 111");
-        Blog blog2 = new Blog(2,"Heading2","Description 112");
-        Blog blog3 = new Blog(3,"Heading3","Description3");
-        return List.of(blog1,blog2,blog3);
+    public List<Blog> getBlogs() {
+        Blog blog1 = new Blog(1, "Heading1", "Description 111");
+        Blog blog2 = new Blog(2, "Heading2", "Description 112");
+        Blog blog3 = new Blog(3, "Heading3", "Description3");
+        return List.of(blog1, blog2, blog3);
+
+    }
+
+    public void createBlog(String heading, String description) {
 
     }
 }
