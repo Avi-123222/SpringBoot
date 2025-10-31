@@ -1,12 +1,19 @@
 package com.jt.jt_blogs.service;
 
 import com.jt.jt_blogs.model.Blog;
+
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BlogService {
+    public final JdbcTemplate jdbcTemplate;
+
     public List<Blog> getBlogs() {
         Blog blog1 = new Blog(1, "Heading1", "Description 111");
         Blog blog2 = new Blog(2, "Heading2", "Description 112");
@@ -16,6 +23,7 @@ public class BlogService {
     }
 
     public void createBlog(String heading, String description) {
-
+        String query = "INSERT INTO blogs (heading, description) VALUES ( ?, ?)";
+        jdbcTemplate.update(query, heading, description);
     }
 }
