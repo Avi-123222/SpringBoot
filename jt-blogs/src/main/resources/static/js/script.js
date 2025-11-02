@@ -1,3 +1,3 @@
-function onHeadingClick(blogId){
-        alert(blogId)
+function onHeadingClick(id){
+        window.location.href=`/blog/${id}`;
 }
