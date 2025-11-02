@@ -35,4 +35,10 @@ public class BlogController {
         return "redirect:/";
     }
 
+    @GetMapping("/delete")
+    public String getMethodName(@RequestParam String id) {
+        service.deleteBlogById(id);
+        return "redirect:/";
+    }
+
 }
