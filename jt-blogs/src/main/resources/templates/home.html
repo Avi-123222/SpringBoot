@@ -1,36 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head data-th-replace="~{/common/fragment :: head}">
-    
-   
 
-</head>
+<head data-th-replace="~{/common/fragment::head}"></head>
+
 <body>
-<header data-th-replace="/common/fragment::header"></header>
+  <header data-th-replace="~{/common/fragment::header}"></header>
 
-
-
-<section class="container mt-3">
+  <section class="container mt-3">
     <div class="text-end">
-        <a href="/form" class="btn btn-primary">ADD Blog</a>
-    </div>
-    <div  class="p-3 shadow-lg my-3 cursor-pointer d-flex justify-content-between rounded-3" data-th-each= "blog,details: ${blogs}" data-th-onClick="|onHeadingClick(${blog.id})|" style="cursor:pointer;">
-        <h3 data-th-text="|${details.index+1}.${blog.heading}|" ></h3>
-        <div>
-            <a data-th-href="|edit?id=${blog.id}|" class ="me-4 text-decoration-none">
-                ✏️
-            </a>
-            <a data-th-href="|delete?id=${blog.id}|"  class ="text-decoration-none">
-                🗑️
-            </a>
-
-        </div>
-
+      <a data-th-replace="~{/common/fragment::globalBtn('Add Blog', '/form')}"></a>
     </div>
 
+    <div class="p-3 shadow-lg my-3 cursor-pointer d-flex justify-content-between rounded-3" style="cursor:pointer;"
+      data-th-each="blog, details : ${blogs}" data-th-onClick="|onHeadingClick(${blog.id})|">
 
-</section>
+      <h3 data-th-text="| ${details.index +1}. ${blog.heading} |"></h3>
 
+      <div>
+        <a data-th-href="|edit?id=${blog.id}|" class="me-4 text-decoration-none">✏️</a>
+        <a data-th-href="|delete?id=${blog.id}|" class="text-decoration-none">🗑️</a>
+      </div>
+    </div>
+  </section>
 
 </body>
+
 </html>

@@ -1,3 +1,3 @@
 function onHeadingClick(id){
-        window.location.href=`/blog/${id}`;
+        location.href=`/blog/${id}`;
 }
