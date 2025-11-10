@@ -7,10 +7,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
+// import org.springframework.data.domain.Example;
+// import org.springframework.data.domain.PageRequest;
+// import org.springframework.data.domain.Sort;
+// import org.springframework.data.domain.Sort.Direction;
 
 import com.methods_of_jpa.model.Product;
 import com.methods_of_jpa.repository.ProductRepository;
