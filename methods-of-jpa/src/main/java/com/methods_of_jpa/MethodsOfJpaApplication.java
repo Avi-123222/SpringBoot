@@ -1,3 +1,4 @@
+
 package com.methods_of_jpa;
 
 import java.util.List;
@@ -7,20 +8,25 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-// import org.springframework.data.domain.Example;
-// import org.springframework.data.domain.PageRequest;
-// import org.springframework.data.domain.Sort;
-// import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 
+import com.methods_of_jpa.model.Order;
 import com.methods_of_jpa.model.Product;
+import com.methods_of_jpa.repository.OrderRepository;
 import com.methods_of_jpa.repository.ProductRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @SpringBootApplication
 @RequiredArgsConstructor
 public class MethodsOfJpaApplication {
 	private final ProductRepository productRepository;
+	private final OrderRepository orderRepository;
+	private final OrderService orderService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MethodsOfJpaApplication.class, args);
@@ -39,7 +45,7 @@ public class MethodsOfJpaApplication {
 			// var savedProduct = productRepository.save(product);
 			// System.out.println("saved product is " + savedProduct);
 
-			// SAVE ALL
+			// // SAVE ALL
 			// var products = getProducts();
 			// productRepository.saveAll(products);
 
@@ -57,7 +63,7 @@ public class MethodsOfJpaApplication {
 			// Delete
 			// productRepository.deleteById("f3c93d7d-ed9a-42c1-a541-1460726c89fd");
 
-			// FIND ALL (SELECT)
+			// FIND ALL (SELECT) -> for extracting multiple rows
 			// var existingProducts = productRepository.findAll();
 			// existingProducts.forEach(System.out::println);
 			// existingProducts.forEach(p -> System.out.println(p));
@@ -68,33 +74,102 @@ public class MethodsOfJpaApplication {
 			// var sortedProductsByProductName =
 			// productRepository.findAll(Sort.by(Direction.DESC, "productName"));
 			// sortedProductsByProductName.forEach(System.out::println);
-			// var productByPage = productRepository.findAll(PageRequest.of(1, 6,
-			// Sort.by(Direction.ASC, "productName")));
-			// productByPage.forEach(System.out::println);
 
-			// Find By id -used for extracting single record
+			// var productsByPage = productRepository.findAll(PageRequest.of(0, 6)); //
+			// pageNumber (0 - based indexing), pageSize (number of data available in that
+			// page)
+			// var productsByPage = productRepository.findAll(PageRequest.of(0, 6,
+			// Sort.by(Direction.ASC, "productName")));
+			// productsByPage.forEach(System.out::println);
+
+			// FIND BY ID (SELECT) -> for extractin a single row
 			// var existingProduct =
-			// productRepository.findById("6a24b8cf-68bb-487e-864e-3a95fc1307ce").orElseThrow();
-			// System.out.println("/////////////" + existingProduct);
-			// Update
-			var optProduct = productRepository.findById("6a24b8cf-68bb-487e-864e-3a95fc1307ce");
-			if (optProduct.isPresent()) {
-				var existingProduct = optProduct.get();
-				existingProduct.setProductPrice(5555.55);
-				productRepository.save(existingProduct);
-			} else {
-				System.out.println("Product not found");
-			}
-			/*
-			 * Above methods are already given by jpa repository, but we want to execute
-			 * some custom SQl query
-			 * -JPQL (Java Persistence Query Language)
-			 * -Navite Query or plain Sql
-			 * - <Return Type> <keyword><property><Condition>(parameters)
+			// productRepository.findById("f9fbe308-6d07-4aa3-a403-3e1f4dd9c593").orElseThrow();
+			// // NoSuchElementException
+			// System.out.println("/////////////////////" + existingProduct);
+
+			// UPDATE
+			// var optProduct = productRepository.findById("f9fbe308-6d07-4aa3-a403");
+			// if(optProduct.isPresent()) {
+			// var existingProduct = optProduct.get();
+			// existingProduct.setProductPrice(existingProduct.getProductPrice() + 123);
+			// productRepository.save(existingProduct);
+			// } else {
+			// System.out.println("No Product Found");
+			// }
+
+			/**
+			 * Above emthods are already given by JPA Repository, but if we want to execute
+			 * some custom SQL query
+			 * - Custom Query Methods (Query methods created by us)
+			 * - JPQL (Java Persistence Query Language)
+			 * - Native Query or Plain SQL
 			 */
 
+			// ====================== Query Methods ================
+			// var productByName = productRepository.findByProductName("Iphone 17 pro
+			// max").orElseThrow();
+			// System.out.println("////////////////////////" + productByName);
+
+			// var productsInRange = productRepository.findAllByProductPriceBetween(2000,
+			// 5000);
+			// productsInRange.forEach(System.out::println);
+
+			// var productsGreaterThan4002 =
+			// productRepository.findAllByProductPriceGreaterThan(4002);
+			// productsGreaterThan4002.forEach(System.out::println);
+
+			// var productsGreaterThanEquals4002 =
+			// productRepository.findAllByProductPriceGreaterThanEqual(4002);
+			// productsGreaterThanEquals4002.forEach(System.out::println);
+
+			// var productsGreaterThanEquals4002Sorted = productRepository
+			// .findAllByProductPriceGreaterThanEqual(4002, Sort.by(Direction.DESC,
+			// "productPrice"));
+			// productsGreaterThanEquals4002Sorted.forEach(System.out::println);
+
+			// var productByPriceAndBrand = productRepository
+			// .findByProductPriceAndProductBrand(150000.99, "Apple");
+			// System.out.println("//////////////////////// " + productByPriceAndBrand);
+
+			// var productsHavingBrandNull =
+			// productRepository.findAllByProductNameIsNotNull();
+			// productsHavingBrandNull.forEach(System.out::println);
+
+			// =========================== JPQL =========================
+			// var product1 = productRepository.getProduct1(150000.99, "Apple");
+			// System.out.println("////////////////////////////" + product1);
+
+			// var product2 = productRepository.getProduct2(150000.99, "Apple");
+			// System.out.println("////////////////////////////" + product2);
+
+			// var product3 = productRepository.getProduct3(150000.99, "Apple");
+			// System.out.println("////////////////////////////" + product3);
+
+			// var affectedRows = productRepository.updateProduct(250000.99, "Apple");
+			// System.out.println("////////////////////////////-> " + affectedRows);
+
+			orderService.placeOrder("c61603a6-83c3-492e-95ce-cb53a0563d2f", 19);
 		};
 	}
+
+	// @Transactional
+	// private void placeOrder(String productId, int quantity) {
+	// var product = productRepository.findById(productId).orElseThrow();
+
+	// // reduce stock
+	// product.setQuantity(product.getQuantity() - quantity);
+	// productRepository.save(product);
+
+	// if(true) throw new RuntimeException();
+
+	// // place order
+	// var order = Order.builder()
+	// .productId(productId)
+	// .quantity(quantity)
+	// .build();
+	// orderRepository.save(order);
+	// }
 
 	private List<Product> getProducts() {
 		return IntStream.range(1, 10)
