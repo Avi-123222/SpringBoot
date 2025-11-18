@@ -1,9 +1,14 @@
 package com.example.many_to_one;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,4 +25,7 @@ public class Teacher {
     private int teacherId;
 
     private String teacherName;
+    @OneToMany(cascade = jakarta.persistence.CascadeType.ALL, mappedBy = "teacher", fetch = FetchType.EAGER)
+    private List<Subject> subjects = new ArrayList<>();
+
 }
