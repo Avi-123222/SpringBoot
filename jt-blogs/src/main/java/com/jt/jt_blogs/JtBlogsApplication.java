@@ -8,7 +8,7 @@ public class JtBlogsApplication {
 
 	public static void main(String[] args) {
 
-        SpringApplication.run(JtBlogsApplication.class, args);
+		SpringApplication.run(JtBlogsApplication.class, args);
 	}
 
 }

@@ -1,26 +1,26 @@
-package com.jt.jt_blogs.model;
+package com.methods_of_jpa.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Data
 @Builder
-public class Blog {
+@Entity
+@Table(name = "orders")
+public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String heading;
-    private String description;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String orderId;
 
+    private String productId;
+    private int quantity;
 }

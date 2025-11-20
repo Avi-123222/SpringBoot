@@ -1,26 +1,32 @@
-package com.jt.jt_blogs.model;
+package com.example.many_to_many;
+
+import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Setter
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Data
 @Builder
-public class Blog {
+@Entity
+
+public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String heading;
-    private String description;
+    private int CourseId;
+    private String courseName;
+
+    @ManyToMany(mappedBy = "courses", fetch = FetchType.EAGER)
+    private List<Student> students;
 
 }
