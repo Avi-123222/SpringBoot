@@ -1,5 +1,6 @@
 package com.jt.sms.controller;
 
+import com.jt.sms.dto.StudentRequestDTO;
 import com.jt.sms.model.Student;
 import com.jt.sms.service.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class StudentController {
     @GetMapping("/students")
     public List<Student> getStudent() {
 
-        return studentService.getStudents();
+        return studentService.getStudent();
     }
 
     @PostMapping("/create")
@@ -25,4 +26,32 @@ public class StudentController {
         System.out.println("////////" + newStudent);
         return studentService.saveStudent(newStudent);
     }
+
+    @GetMapping("/student/{id}")
+
+    public Student getStudentInfo(@PathVariable String id){
+        return studentService.getStudents(id);
+
+    }
+    @GetMapping("student/roll/{roll}")
+    public Student getStudentByRoll(@PathVariable int roll){
+        return studentService.getStudentByRoll(roll);
+    }
+    @DeleteMapping("/student/delete/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Student deletetByid(@PathVariable String id){
+        return studentService.deleteStudentById(id);
+    }
+    @PutMapping("/student/update/{id}")
+    public Student updateStudentById(@PathVariable String id,@RequestBody Student student){
+
+            return studentService.updateStudentById(id,student);
+    }
+    @PatchMapping("/student/update-by-field/{id}")
+    public Student updateStudentPatch(@PathVariable String id,@RequestBody StudentRequestDTO student){
+        return studentService.partialUpdateStudentById(id,student);
+    }
+
+
 }
+

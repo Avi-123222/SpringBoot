@@ -1,6 +1,8 @@
 package com.jt.sms.service;
 
 import java.util.List;
+
+import com.jt.sms.dto.StudentRequestDTO;
 import com.jt.sms.model.Student;
 import com.jt.sms.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,10 +13,41 @@ import org.springframework.stereotype.Service;
 public class StudentService {
     private final StudentRepository repository;
 
-    public List<Student> getStudents() {
+    public List<Student> getStudent() {
         return repository.findAll();
     }
     public Student saveStudent(Student newStudent){
        return repository.save(newStudent);
+    }
+    public Student getStudents(String id){
+        return repository.findById(id).orElseThrow();
+    }
+    public Student getStudentByRoll(int roll){
+        return repository.findByRoll(roll).orElseThrow();
+    }
+    public Student deleteStudentById(String id){
+
+        Student existingStudent = getStudents(id);
+        repository.deleteById(id);
+        return existingStudent;
+    }
+    public Student updateStudentById(String id,Student updatedStudent){
+        getStudents(id);
+        updatedStudent.setId(id);
+        return repository.save(updatedStudent);
+    }
+
+    public Student partialUpdateStudentById(String id, StudentRequestDTO updatedStudent) {
+       Student existingStudents = getStudents(id);
+
+        if(updatedStudent.getRoll() != null) existingStudents.setRoll(updatedStudent.getRoll());
+        if(updatedStudent.getName() != null) existingStudents.setName(updatedStudent.getName());
+        if(updatedStudent.getEmail() != null) existingStudents.setEmail(updatedStudent.getEmail());
+        if(updatedStudent.getFee() != null) existingStudents.setFee(updatedStudent.getFee());
+        if(updatedStudent.getPhoneNumber() != null) existingStudents.setPhoneNumber(updatedStudent.getPhoneNumber());
+
+        return repository.save(existingStudents);
+
+
     }
 }
