@@ -1,0 +1,58 @@
+package com.jt.sms.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
+
+
+
+@RestControllerAdvice
+public class HandleException {
+    @ExceptionHandler(NoSuchElementException.class)
+   // @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ProblemDetail handleNoSuchException() {
+//        System.out.println("Resource not Found");
+//        Map<String,String> map = new HashMap<>();
+//        map.put("Title","Not Found");
+//        map.put("Detail","Resource not found");
+//        map.put("TimeStamp", LocalTime.now().toString());
+//        return map;
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Resource not found");
+        problemDetail.setProperty("timeStamp", LocalDateTime.now());
+        return problemDetail;
+    }
+        @ExceptionHandler(NoResourceFoundException.class)
+        public ProblemDetail handleNoResourceFoundException(NoResourceFoundException e) {
+
+            ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
+            problemDetail.setProperty("timeStamp", LocalDateTime.now());
+            return problemDetail;
+        }
+            @ExceptionHandler(StudentNotFoundException.class)
+            public ProblemDetail handleStudentNotFoundException(StudentNotFoundException e) {
+
+                ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, e.getMessage());
+                problemDetail.setProperty("timeStamp", LocalDateTime.now());
+                return problemDetail;
+
+   }
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ProblemDetail handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.METHOD_NOT_ALLOWED, e.getMessage());
+        problemDetail.setProperty("timeStamp", LocalDateTime.now());
+        return problemDetail;
+
+    }
+}

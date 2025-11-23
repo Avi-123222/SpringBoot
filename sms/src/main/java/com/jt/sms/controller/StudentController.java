@@ -7,7 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLOutput;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,7 +37,11 @@ public class StudentController {
     }
     @GetMapping("student/roll/{roll}")
     public Student getStudentByRoll(@PathVariable int roll){
-        return studentService.getStudentByRoll(roll);
+
+            return studentService.getStudentByRoll(roll);
+
+
+
     }
     @DeleteMapping("/student/delete/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)

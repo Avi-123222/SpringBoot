@@ -1,8 +1,10 @@
 package com.jt.sms.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import com.jt.sms.dto.StudentRequestDTO;
+import com.jt.sms.exception.StudentNotFoundException;
 import com.jt.sms.model.Student;
 import com.jt.sms.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +22,15 @@ public class StudentService {
        return repository.save(newStudent);
     }
     public Student getStudents(String id){
-        return repository.findById(id).orElseThrow();
+        return repository.findById(id).orElseThrow(()-> new StudentNotFoundException("student not found exception"+ id));
     }
     public Student getStudentByRoll(int roll){
-        return repository.findByRoll(roll).orElseThrow();
+        //try {
+            return repository.findByRoll(roll).orElseThrow(()->new StudentNotFoundException("student not found with the roll" + roll));
+       // }catch (NoSuchElementException e){
+           // System.out.println("Student not Found");
+            //return null;
+        //}
     }
     public Student deleteStudentById(String id){
 
