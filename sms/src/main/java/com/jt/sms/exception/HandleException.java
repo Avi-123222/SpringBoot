@@ -2,19 +2,23 @@ package com.jt.sms.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
-
+import java.util.StringJoiner;
 
 
 @RestControllerAdvice
@@ -51,6 +55,20 @@ public class HandleException {
     public ProblemDetail handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
 
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.METHOD_NOT_ALLOWED, e.getMessage());
+        problemDetail.setProperty("timeStamp", LocalDateTime.now());
+        return problemDetail;
+
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ProblemDetail handleMethodArgumentNotValid(MethodArgumentNotValidException e){
+        StringJoiner joiner = new StringJoiner(",");
+       e.getAllErrors().forEach(error -> {
+           String message = error.getDefaultMessage();
+           String  fieldName = ((FieldError)error).getField() ;
+           joiner.add(fieldName+" "+ message);
+       });
+
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,joiner.toString());
         problemDetail.setProperty("timeStamp", LocalDateTime.now());
         return problemDetail;
 
