@@ -68,7 +68,7 @@ public class HandleException {
            joiner.add(fieldName+" "+ message);
        });
 
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,joiner.toString());
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY,joiner.toString());
         problemDetail.setProperty("timeStamp", LocalDateTime.now());
         return problemDetail;
 
