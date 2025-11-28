@@ -3,6 +3,9 @@ package com.jt.sms.controller;
 import com.jt.sms.dto.StudentDto;
 
 import com.jt.sms.service.StudentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,9 +17,11 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name ="Student API",
+description = "This controller manages CRUD operation for Students")
 public class StudentController {
     private final StudentService studentService;
-
+@Operation(summary= "get all students",description = "Fetch All students")
     @GetMapping("/students")
     public List<StudentDto> getStudent() {
 
@@ -25,6 +30,8 @@ public class StudentController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Creates a new student")
+    @ApiResponse(description = "Student validation failed",ref = "422",useReturnTypeSchema = true)
     public StudentDto createStudent(@RequestBody @Valid StudentDto dto) {
         System.out.println("////////" + dto);
         return studentService.saveStudent(dto);
