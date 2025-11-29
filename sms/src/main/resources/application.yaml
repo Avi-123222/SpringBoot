@@ -21,3 +21,18 @@ logging:
    level:
      root: INFO
      'com.jt.sms.controller.TeacherController': DEBUG
+#Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#Enable info response
+info:
+  env:
+    enabled: true
+
+  app:
+    name: SMS
+    version: 1.0.0
+

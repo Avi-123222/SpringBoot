@@ -1,19 +1,18 @@
 package com.jt.sms.controller;
 
 import com.jt.sms.model.Teacher;
-import com.jt.sms.service.TeacherService;
+import com.jt.sms.service.ITeacherService;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/teacher")
 @Slf4j
-public class TeacherController {
-    private final TeacherService service;
+public class TeacherController  {
+    private final ITeacherService service;
 
     @PostMapping("/create")
     public Teacher createTeacher(@RequestBody Teacher newTeacher){
