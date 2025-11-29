@@ -16,3 +16,8 @@ spring:
     properties:
       hibernate:
         format-sql: true
+ #Root level logging
+logging:
+   level:
+     root: INFO
+     'com.jt.sms.controller.TeacherController': DEBUG
