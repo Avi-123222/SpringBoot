@@ -1,3 +1,33 @@
+server:
+  port: 2066
+
 spring:
   application:
-    name: backend
+    name: Tasty Town Backend
+
+  datasource:
+    url: jdbc:postgresql://localhost/sb_oct
+    username: postgres
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+#ROOT LEVEL LOGGING
+logging:
+  level:
+    root: INFO
+    'com.jt.sms.controller.TeacherController': DEBUG
+#INFO is default
+
+#ACTUATORs
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
