@@ -19,11 +19,11 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/categories")
-@Tag(name = "Tasty-Town API",description = "A web-application for ordering food")
+@Tag(name = "Tasty-Town API",description = "A controller for executing CRUD operation for Food Category")
 public class CategoryController {
     private final ICategoryService service;
 
-    @Operation(summary="Get all food Category",description = "Fetch all food category")
+    @Operation(summary="Get all food Category")
     @GetMapping("/")
     public List<Category> getCategories() {
         return service.getCategories();

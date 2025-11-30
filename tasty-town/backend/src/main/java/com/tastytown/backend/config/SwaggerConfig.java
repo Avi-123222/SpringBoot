@@ -16,7 +16,7 @@ public class SwaggerConfig {
     public Info getInfo(){
         Info info = new Info()
                 .title("Tasty Town")
-                .description("A e-commerce web-application for ordering food ")
+                .description("A e- web-application for ordering food ")
                 .version("v2");
         return  info;
     }
