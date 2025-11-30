@@ -21,7 +21,7 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     public Category getCategoryById(String catId) {
-        return categoryRepository.findById(catId).orElseThrow(()-> new CategoryNotFoundException("category not found in this id" + catId));
+        return categoryRepository.findById(catId).orElseThrow(()-> new CategoryNotFoundException("category not found in this id   " + catId));
     }
 
     public Category addCategory(Category cat) {
