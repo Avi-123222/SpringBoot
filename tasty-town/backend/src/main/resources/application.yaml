@@ -1,5 +1,7 @@
 server:
   port: 2066
+  servlet:
+    context-path: "/tasty-town"
 
 spring:
   application:
@@ -22,6 +24,7 @@ spring:
 logging:
   level:
     root: INFO
+
 
 upload:
   image:
