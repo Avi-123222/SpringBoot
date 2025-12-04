@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-
 import java.time.LocalDateTime;
 
 import java.util.NoSuchElementException;
 import java.util.StringJoiner;
-
 
 @RestControllerAdvice
 public class HandleException {
@@ -28,6 +26,7 @@ public class HandleException {
         problemDetail.setProperty("timeStamp", LocalDateTime.now());
         return problemDetail;
     }
+
     @ExceptionHandler(NoResourceFoundException.class)
     public ProblemDetail handleNoResourceFoundException(NoResourceFoundException e) {
 
@@ -35,6 +34,7 @@ public class HandleException {
         problemDetail.setProperty("timeStamp", LocalDateTime.now());
         return problemDetail;
     }
+
     @ExceptionHandler(CategoryNotFoundException.class)
     public ProblemDetail handleStudentNotFoundException(CategoryNotFoundException e) {
 
@@ -43,6 +43,7 @@ public class HandleException {
         return problemDetail;
 
     }
+
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ProblemDetail handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
 
@@ -51,16 +52,18 @@ public class HandleException {
         return problemDetail;
 
     }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ProblemDetail handleMethodArgumentNotValid(MethodArgumentNotValidException e){
+    public ProblemDetail handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
         StringJoiner joiner = new StringJoiner(",");
         e.getAllErrors().forEach(error -> {
             String message = error.getDefaultMessage();
-            String  fieldName = ((FieldError)error).getField() ;
-            joiner.add(fieldName+" "+ message);
+            String fieldName = ((FieldError) error).getField();
+            joiner.add(fieldName + " " + message);
         });
 
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY,joiner.toString());
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY,
+                joiner.toString());
         problemDetail.setProperty("timeStamp", LocalDateTime.now());
         return problemDetail;
 

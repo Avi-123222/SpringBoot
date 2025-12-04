@@ -9,6 +9,7 @@ import com.tastytown.backend.repository.FoodRepository;
 import com.tastytown.backend.service.ICategoryService;
 import com.tastytown.backend.service.IFoodService;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,8 +18,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -42,7 +46,7 @@ public class FoodServiceImpl implements IFoodService {
 ////        convert dto to food
 //        Food food = FoodMapper.convertToFood(dto, category, newImageName);
 //
-    ////        save food information in database
+////        save food information in database
 //        Food savedFood = foodRepository.save(food);
 //
 //        return FoodMapper.convertToFoodResponseDTO(savedFood);
@@ -56,7 +60,7 @@ public class FoodServiceImpl implements IFoodService {
 //        convert dto to food
         Food food = FoodMapper.convertToFood(dto, category, null);
 
-        //        save food information in database
+    //        save food information in database
         Food savedFood = foodRepository.save(food);
 
         return FoodMapper.convertToFoodResponseDTO(savedFood);
@@ -96,6 +100,69 @@ public class FoodServiceImpl implements IFoodService {
         return paginatedDTOs;
     }
 
+//    full update a single food using put mapping
+    @Override
+    public FoodResponseDTO updateFoodFull(String foodId, FoodRequestDTO dto) {
+        Food existingFood = foodRepository.findById(foodId)
+                .orElseThrow(() -> new NoSuchElementException("Food Not Found !!!"));
+
+        Category category = categoryService.getCategoryById(dto.categoryId());
+
+        existingFood.setFoodName(dto.foodName());
+        existingFood.setFoodDescription(dto.foodDescription());
+        existingFood.setFoodPrice(dto.foodPrice());
+
+        existingFood.setCategory(category);
+
+        Food updatedFood = foodRepository.save(existingFood);
+        return FoodMapper.convertToFoodResponseDTO(updatedFood);
+
+    }
+
+//    partial update a single food using patch mapping
+    @Override
+    public FoodResponseDTO updateFoodPartial(String foodId, Map<String, Object> updates) {
+       Food existingFood = getFoodById(foodId);
+
+       if (updates.containsKey("foodName")) existingFood.setFoodName(String.valueOf(updates.get("foodName")));
+       if (updates.containsKey("foodDescription")) existingFood.setFoodDescription(String.valueOf(updates.get("foodDescription")));
+       if (updates.containsKey("foodPrice")) existingFood.setFoodPrice(Double.parseDouble(updates.get("foodPrice").toString()));
+       if (updates.containsKey("categoryId")) {
+            String categoryId = String.valueOf(updates.get("categoryId"));
+            existingFood.setCategory(categoryService.getCategoryById(categoryId));
+       }
+        return FoodMapper.convertToFoodResponseDTO(foodRepository.save(existingFood));
+    }
+
+    @Override
+    public List<FoodResponseDTO> getAllFoods() {
+        return foodRepository.findAll()
+                .stream()
+                .map(FoodMapper::convertToFoodResponseDTO)
+                .toList();
+
+    }
+
+    @Override
+    public FoodResponseDTO getSingleFoodById(String foodId) {
+        Food food = getFoodById(foodId);
+        return FoodMapper.convertToFoodResponseDTO(food);
+
+
+    }
+
+    @Override
+    public byte[] getFoodImageByImageName(String imageName) throws IOException {
+        if(imageName == null || imageName.isEmpty() || imageName.isBlank()) {
+            throw new RuntimeException("Image name missing");
+        }
+
+        FileInputStream inputStream = new FileInputStream(IMAGES_FOLDER_PATH + File.separator + imageName);
+        byte[] image = inputStream.readAllBytes();
+
+        return image;
+    }
+
     private String uploadImage(MultipartFile foodImage) throws IOException {
         if (foodImage == null || foodImage.isEmpty()) {
             throw new NoSuchElementException("Food image not found");
@@ -122,3 +189,4 @@ public class FoodServiceImpl implements IFoodService {
                 .orElseThrow(() -> new NoSuchElementException("Food not found"));
     }
 }
+

@@ -16,7 +16,7 @@ public class AppConfig {
     @Bean
     CommandLineRunner commandLineRunner() {
         return args -> {
-            fileService.createImagesFolder();
+                fileService.createImagesFolder();
         };
     }
 }

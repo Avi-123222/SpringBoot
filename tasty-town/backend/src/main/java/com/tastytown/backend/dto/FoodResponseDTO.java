@@ -8,6 +8,11 @@ public record FoodResponseDTO(
         String foodImage,
         String categoryId,
         String categoryName
-
 ) {
+//    Works like a Immuatbale Object
+//    by default all the fields are private & final
+//    by default provide getters for all the fields
+//    provide a all args constructor
+//   overrides hashcode & equals() for object comparison
+//    overrides the toString()
 }
