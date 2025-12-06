@@ -1,19 +1,23 @@
-import Header from "@/components/customer/header/Header"
+import FoodSection from "@/components/customer/food section/FoodSection";
+import Header from "@/components/customer/header/Header";
+import Parallax from "@/components/customer/parallax/Parallax";
 
 export default function Home() {
-    return(
-        <>
-            <main className="container">
-                {/* Header */}
-                <Header/>
+  return (
+    <>
+      <main className="container">
+        {/* Header */}
+        <Header />
 
-                {/**Food Section */}
+        {/* Food Section */}
+        <FoodSection />
 
-                {/**Parallax */}
+        {/* Parallax */}
+        <Parallax />
 
-                {/** */}
-            
-            </main>
-        </>
-    )
+        {/* Food Section */}
+        <FoodSection />
+      </main>
+    </>
+  )
 }

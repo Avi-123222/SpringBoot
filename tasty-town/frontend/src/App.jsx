@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 function App() {
   return (
     <>
-      <h1 className="text-danger">App works</h1>
+      <h1 className="text-danger">Tasty Town</h1>
       <Navbar />
 
       <Home/>
