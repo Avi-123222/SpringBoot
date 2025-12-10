@@ -1,18 +1,17 @@
-// import logo from "../../../assets/logo.png" 
-import logo from"@assets/images/logo.png"
+// import logo from "../../../assets/images/logo.png"
+import logo from "@assets/images/logo.png";
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar navbar-expand-lg bg-body-tertiary premium-navbar premium-section sticky-top">
+      <div className="brand-logo text-center my-3 fade-slide-in">
+        <h1 className="logo-text">Tasty Town</h1>
+        <p className="logo-tagline">Deliciousness Delivered</p>
+      </div>
+
       <div className="container">
         <a href="/">
-          <img
-            src={logo}
-            alt="logo"
-            className="mx-4"
-            height={48}
-            width={48}
-          />
+          <img src={logo} alt="logo" className="mx-4" height={48} width={48} />
         </a>
 
         <button
@@ -30,12 +29,22 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="" href="/">
+              <a
+                className={`nav-link ${
+                  window.location.pathname === "/" ? "active" : ""
+                }`}
+                href="/"
+              >
                 Home
               </a>
             </li>
             <li className="nav-item">
-              <a className="" href="/explore">
+              <a
+                className={`nav-link ${
+                  window.location.pathname === "/explore" ? "active" : ""
+                }`}
+                href="/explore"
+              >
                 Explore
               </a>
             </li>
