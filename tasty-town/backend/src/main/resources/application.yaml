@@ -29,3 +29,5 @@ logging:
 upload:
   image:
     path: images
+JWT:
+   SECRET: '5ec1548b2e42316289edf978c29cb017ee98248127f7c5ffed7b7d7b1bac235e'
