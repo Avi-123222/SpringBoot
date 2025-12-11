@@ -79,7 +79,7 @@ public class SecurityConfig {
             if (optional.isEmpty()) {
                 UserEntity entity = new UserEntity();
                 entity.setUserEmail("s@gmail.com");
-                entity.setUserPassword("sai");
+                entity.setUserPassword(encoder().encode("sai"));
 
                 repository.save(entity);
             }
