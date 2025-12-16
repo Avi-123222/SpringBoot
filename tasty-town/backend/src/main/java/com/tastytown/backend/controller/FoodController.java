@@ -7,6 +7,7 @@ import com.tastytown.backend.dto.FoodResponseDTO;
 import com.tastytown.backend.service.IFoodService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,26 +25,15 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/foods")
 @RequiredArgsConstructor
-@CrossOrigin("https://localhost:5173")
-@Tag(name = "Tasty-Town Food API", description = "A controller manages the CRUD operations for Food entities.")
+@Tag(name = "Food API", description = "A controller manages the CRUD operations for Food entities.")
+
 public class FoodController {
     private final ObjectMapper objectMapper;
     private final IFoodService foodService;
 
-//    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public ResponseEntity<FoodResponseDTO> createFood( @RequestPart String foodData,
-//                                                       @RequestPart MultipartFile foodImage)
-//            throws JsonProcessingException, IOException {
-//
-//        FoodRequestDTO dto = objectMapper.readValue(foodData, FoodRequestDTO.class);
-//
-//        FoodResponseDTO responseDTO = foodService.createFood(dto, foodImage);
-//
-//        return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
-//    }
-
+    @SecurityRequirement(name = "bearerAuth")
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Creates a new Food entity")
+    @Operation(summary = "Creates a new Food entity", description = "Creates a new food item with the provided data.")
     @ApiResponse(description = "Food created successfully", responseCode = "201")
     @ApiResponse(description = "Food validation failed", responseCode = "422")
     @PostMapping
@@ -53,8 +43,9 @@ public class FoodController {
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Uploads an image for a specific Food entity")
+    @Operation(summary = "Uploads an image for a specific Food entity", description = "Uploads a new image for the food item identified by foodId.")
     @ApiResponse(description = "Food image uploaded successfully", responseCode = "204")
     @ApiResponse(description = "Food not found", responseCode = "404")
     @PostMapping(value = "/image/{foodId}/food", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -66,20 +57,21 @@ public class FoodController {
     }
 
 
-    @Operation(summary = "Retrieves all foods with pagination, filtering, and searching")
+    @Operation(summary = "Retrieves all foods with pagination, filtering, and searching", description = "Returns a page of Food entities based on optional category, search term, page number, and page size.")
     @ApiResponse(description = "Successfully retrieved paginated foods", responseCode = "200")
     @GetMapping("/paginated-foods")
     public ResponseEntity<Page<FoodResponseDTO>> getPaginatedFoods(
             @RequestParam(required = false, defaultValue = "all", name = "catId") String categoryId,
             @RequestParam(required = false) String search,
-            @RequestParam(required = false, defaultValue = "0",name="page") int pageNumber,
-            @RequestParam(required = false, defaultValue = "12",name = "size") int pageSize
+            @RequestParam(required = false, defaultValue = "0", name = "page") int pageNumber,
+            @RequestParam(required = false, defaultValue = "12", name = "size") int pageSize
     ) {
         return ResponseEntity.ok(foodService.getPaginatedFoods(categoryId, search, pageNumber, pageSize));
     }
 
 
-    @Operation(summary = "Performs a full update of a Food entity")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Performs a full update of a Food entity", description = "Replaces the entire Food entity with the new data provided in the request body.")
     @ApiResponse(description = "Food updated successfully", responseCode = "200")
     @ApiResponse(description = "Food not found", responseCode = "404")
     @PutMapping("/{foodId}")
@@ -92,7 +84,8 @@ public class FoodController {
     }
 
 
-    @Operation(summary = "Performs a partial update of a Food entity")
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Performs a partial update of a Food entity", description = "Updates only the fields provided in the request body for the specified foodId.")
     @ApiResponse(description = "Food partially updated successfully", responseCode = "200")
     @ApiResponse(description = "Food not found", responseCode = "404")
     @PatchMapping("/{foodId}")
@@ -105,7 +98,7 @@ public class FoodController {
     }
 
 
-    @Operation(summary = "Retrieves all available foods")
+    @Operation(summary = "Retrieves all available foods", description = "Returns a list of all Food entities.")
     @ApiResponse(description = "Successfully retrieved all foods", responseCode = "200")
     @GetMapping
     public ResponseEntity<List<FoodResponseDTO>> getAllFoods(){
@@ -113,7 +106,7 @@ public class FoodController {
     }
 
 
-    @Operation(summary = "Retrieves a single food by ID")
+    @Operation(summary = "Retrieves a single food by ID", description = "Returns a specific Food entity identified by its ID.")
     @ApiResponse(description = "Food found successfully", responseCode = "200")
     @ApiResponse(description = "Food not found", responseCode = "404")
     @GetMapping("/{foodId}")
@@ -121,7 +114,7 @@ public class FoodController {
         return  ResponseEntity.ok(foodService.getSingleFoodById(foodId));
     }
 
-    @Operation(summary = "Retrieves a food image by its name")
+    @Operation(summary = "Retrieves a food image by its name", description = "Returns the image file as a byte array for the given image name.")
     @ApiResponse(description = "Image retrieved successfully", responseCode = "200")
     @ApiResponse(description = "Image not found", responseCode = "404")
     @GetMapping("/{imageName}/image")

@@ -14,7 +14,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: drop
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
@@ -29,5 +29,11 @@ logging:
 upload:
   image:
     path: images
+
 JWT:
-   SECRET: '5ec1548b2e42316289edf978c29cb017ee98248127f7c5ffed7b7d7b1bac235e'
+  SECRET: a6ae1ee1d65eabc9a7c37f23afc4d0a4db43e04a561a99e202e0addf01fb27bb
+
+DEFAULT:
+  ADMIN:
+    EMAIL: "admin@gmail.com"
+    PASS: "admin"

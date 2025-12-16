@@ -1,4 +1,3 @@
-
 import axios from "axios"
 
 const BASE_URL = "http://localhost:2066/tasty-town/api/v1/categories"
