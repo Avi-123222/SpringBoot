@@ -57,8 +57,6 @@ export default function ExploreFood() {
 
   return (
     <>
-      {/* Navbar added here */}
-      <Navbar />
       <div className={`${styles["page-container"]} container`}>
         <div className={`${styles["content-wrapper"]}`}>
           {/* <!-- Search + Category Filter --> */}
@@ -72,7 +70,9 @@ export default function ExploreFood() {
                     className={`form-select mt-2 ${styles["select-clean"]}`}
                     style={{ maxWidth: "150px" }}
                   >
-                    <option value="all">All</option>
+                    <option value="all" className="drop-btn">
+                      All
+                    </option>
                     {/* <!-- More categories dynamically inserted --> */}
                     {categories.map((category) => (
                       <option
@@ -117,32 +117,42 @@ export default function ExploreFood() {
           <div className={`pagination ${styles.pagination}`}>
             <button
               className="btn btn-sm mx-1 btn-outline-primary"
-              disabled={currentPage <= 0}
+              disabled={currentPage === 0}
               onClick={() => setCurrentPage((prev) => prev - 1)}
             >
-              Back
+              {"<"}
             </button>
 
-            {Array.from({ length: totalPages }, (_, idx) => (
-              <button
-                key={idx}
-                className={`btn btn-sm mx-1 ${
-                  idx === currentPage
-                    ? "btn-primary active"
-                    : "btn-outline-primary"
-                }`}
-                onClick={() => setCurrentPage(idx)}
-              >
-                {idx + 1}
-              </button>
-            ))}
+            {(() => {
+              const windowSize = 5;
+              const start = Math.floor(currentPage / windowSize) * windowSize;
+              const end = Math.min(start + windowSize, totalPages);
+
+              const pages = [];
+              for (let p = start; p < end; p++) {
+                pages.push(
+                  <button
+                    key={p}
+                    className={`btn btn-sm mx-1 ${
+                      currentPage === p
+                        ? "btn-primary active"
+                        : "btn-outline-primary"
+                    }`}
+                    onClick={() => setCurrentPage(p)}
+                  >
+                    {p + 1}
+                  </button>
+                );
+              }
+              return pages;
+            })()}
 
             <button
               className="btn btn-sm mx-1 btn-outline-primary"
-              disabled={currentPage >= totalPages - 1}
+              disabled={currentPage === totalPages - 1}
               onClick={() => setCurrentPage((prev) => prev + 1)}
             >
-              Next
+              {">"}
             </button>
           </div>
         </div>

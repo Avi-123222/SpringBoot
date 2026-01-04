@@ -4,13 +4,14 @@ import Parallax from "@/components/customer/parallax/PArallax";
 
 import { useEffect } from "react";
 import Lenis from "lenis";
+import Footer from "@/components/customer/footer/Footer";
 
 export default function Home() {
 
   useEffect(() => {
     const lenis = new Lenis({
       // infinite: true,
-      duration: 1.2,
+      duration: 2.5,
     });
 
     function raf(time) {
@@ -41,6 +42,9 @@ export default function Home() {
 
         {/* Food Section */}
         <FoodSection />
+
+        {/* Footer */}
+        <Footer />
       </main>
     </>
   )

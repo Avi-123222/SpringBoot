@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid; // Assuming you've added validation to your DTOs
 
-@Tag(name = "Authentication API", description = "Endpoints for user registration and login")
+@Tag(name = "Authentication", description = "Endpoints for user registration and login")
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -49,6 +49,7 @@ public class AuthController {
     )
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody AuthRequestDTO dto) {
+        System.out.println("Controlllerrrrrrrrrrrrrr");
         return ResponseEntity.ok(authService.login(dto));
     }
 

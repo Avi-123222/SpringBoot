@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Cart API", description = "Endpoints for managing the user's shopping cart. Requires 'bearerAuth'.")
+@Tag(name = "CartController-API", description = "Endpoints for managing the user's shopping cart. Requires 'bearerAuth'.")
 @RestController
 @RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
