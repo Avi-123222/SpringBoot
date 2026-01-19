@@ -9,7 +9,11 @@ import Home from "./pages/home/Home";
 import Register from "./pages/auth/Register";
 import Cart from "./pages/cart/Cart";
 import PlaceOrder from "./pages/place order/PlaceOrder";
-import Orders from "./pages/orders/Orders";
+import Orders from "./pages/ordes/Orders";
+import AdminLayout from "./layout/AdminLayout";
+import OrdersList from "./pages/admin/orders-list/OrdersList";
+import CategoryList from "./pages/admin/category-list/CategoryList";
+import FoodsList from "./pages/admin/foods-list/FoodsList";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +33,16 @@ const router = createBrowserRouter([
           { path: "orders", Component: Orders }
         ]
       }
+    ]
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      { path: "orders", element: <OrdersList />},
+      { path: "categories", element: <CategoryList />},
+      { path: "foods", element: <FoodsList />},
     ]
   }
 ])
